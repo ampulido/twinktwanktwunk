@@ -416,7 +416,8 @@ const STATIONS = [
   { id: 'Torre de Poleas', emoji: '🪝', label: 'Torre de Poleas' },
   { id: 'Multipower', emoji: '🏗️', label: 'Multipower / Barras' },
   { id: 'Banco y Mancuernas', emoji: '🏋️', label: 'Banco y Mancuernas' },
-  { id: 'Esterilla / Core', emoji: '🧘', label: 'Esterilla / Core' }
+  { id: 'Esterilla / Core', emoji: '🧘', label: 'Esterilla / Core' },
+  { id: 'En Casa', emoji: '🏠', label: 'En Casa (Esterilla / Sofá)' }
 ];
 
 const PRIO_RANK = { prioritario: 0, mantenimiento: 1, opcional: 2 };
@@ -504,9 +505,9 @@ const EXERCISES = [
   // ESPALDA (Prioritario)
   {
     id: 'p_jalon', name: 'Jalón al pecho en polea', type: 'weight',
-    station: 'Torre de Poleas', zone: 'Poleas', muscle: 'Espalda',
+    station: 'Torre de Poleas', zone: 'Poleas', muscle: 'Espalda', group: 'Jalón en polea',
     restSec: 120, priority: 'prioritario',
-    alternatives: ['p_jalon_neutro', 'p_remo'],
+    alternatives: ['p_jalon_neutro', 'p_jalon_supino', 'p_remo'],
     guide: {
       setup: 'Fija el soporte sobre los muslos; agarre algo más ancho que los hombros.',
       execution: 'Lleva la barra hacia la clavícula sacando pecho y bajando codos.',
@@ -515,9 +516,9 @@ const EXERCISES = [
   },
   {
     id: 'p_jalon_neutro', name: 'Jalón agarre neutro estrecho', type: 'weight',
-    station: 'Torre de Poleas', zone: 'Poleas', muscle: 'Espalda',
+    station: 'Torre de Poleas', zone: 'Poleas', muscle: 'Espalda', group: 'Jalón en polea',
     restSec: 110, priority: 'prioritario',
-    alternatives: ['p_jalon', 'm_remo_apoyo'],
+    alternatives: ['p_jalon', 'p_jalon_supino', 'm_remo_apoyo'],
     guide: {
       setup: 'Agarre estrecho en V o triángulo; muslos bien sujetos bajo los rodillos.',
       execution: 'Tira llevando los codos pegados al costado hasta tocar la parte alta del pecho.',
@@ -526,9 +527,9 @@ const EXERCISES = [
   },
   {
     id: 'p_remo', name: 'Remo sentado en polea baja', type: 'weight',
-    station: 'Torre de Poleas', zone: 'Poleas', muscle: 'Espalda',
+    station: 'Torre de Poleas', zone: 'Poleas', muscle: 'Espalda', group: 'Remo',
     restSec: 120, priority: 'prioritario',
-    alternatives: ['m_remo_apoyo', 'p_jalon'],
+    alternatives: ['p_remo_unilateral', 'm_remo_apoyo', 'p_jalon'],
     guide: {
       setup: 'Pies en la plataforma, rodillas semiflexionadas y espalda recta sin encorvar.',
       execution: 'Tira del agarre hacia el ombligo juntando escápulas sin balancear el torso.',
@@ -537,9 +538,9 @@ const EXERCISES = [
   },
   {
     id: 'm_remo_apoyo', name: 'Remo en máquina con apoyo pecho', type: 'weight',
-    station: 'Máquinas', zone: 'Máquinas', muscle: 'Espalda',
+    station: 'Máquinas', zone: 'Máquinas', muscle: 'Espalda', group: 'Remo',
     restSec: 120, priority: 'prioritario',
-    alternatives: ['p_remo', 'p_jalon_neutro'],
+    alternatives: ['p_remo', 'p_remo_unilateral', 'p_jalon_neutro'],
     guide: {
       setup: 'Ajusta el asiento para que el pecho apoye firme en la almohadilla.',
       execution: 'Tira de las palancas hacia atrás llevando los codos pegados al cuerpo.',
@@ -710,9 +711,9 @@ const EXERCISES = [
   // BRAZOS (Mantenimiento — sustituciones estrictas de mismo grupo y patrón)
   {
     id: 'p_triceps', name: 'Tríceps polea alta barra recta', type: 'weight',
-    station: 'Torre de Poleas', zone: 'Poleas', muscle: 'Brazos',
+    station: 'Torre de Poleas', zone: 'Poleas', muscle: 'Brazos', group: 'Extensión de tríceps',
     restSec: 75, priority: 'mantenimiento',
-    alternatives: ['p_triceps_cuerda', 'd_triceps_copa'],
+    alternatives: ['p_triceps_cuerda', 'p_triceps_katana', 'd_triceps_copa'],
     guide: {
       setup: 'Mirando a la polea alta, agarre prono en barra recta y codos pegados al torso.',
       execution: 'Extiende completamente los codos hacia abajo sin mover los hombros.',
@@ -721,9 +722,9 @@ const EXERCISES = [
   },
   {
     id: 'p_triceps_cuerda', name: 'Extensión tríceps en polea con cuerda', type: 'weight',
-    station: 'Torre de Poleas', zone: 'Poleas', muscle: 'Brazos',
+    station: 'Torre de Poleas', zone: 'Poleas', muscle: 'Brazos', group: 'Extensión de tríceps',
     restSec: 75, priority: 'mantenimiento',
-    alternatives: ['p_triceps', 'd_triceps_copa'],
+    alternatives: ['p_triceps', 'p_triceps_katana', 'd_triceps_copa'],
     guide: {
       setup: 'Polea alta con cuerda, torso ligeramente inclinado y codos fijos al costado.',
       execution: 'Extiende abajo separando los extremos de la cuerda al final del recorrido.',
@@ -732,7 +733,7 @@ const EXERCISES = [
   },
   {
     id: 'd_triceps_copa', name: 'Extensión tríceps tras nuca mancuerna', type: 'weight',
-    station: 'Banco y Mancuernas', zone: 'Mancuernas', muscle: 'Brazos',
+    station: 'Banco y Mancuernas', zone: 'Mancuernas', muscle: 'Brazos', group: 'Extensión de tríceps',
     restSec: 75, priority: 'mantenimiento',
     alternatives: ['p_triceps', 'p_triceps_cuerda'],
     guide: {
@@ -743,9 +744,9 @@ const EXERCISES = [
   },
   {
     id: 'p_biceps', name: 'Bíceps polea baja barra recta', type: 'weight',
-    station: 'Torre de Poleas', zone: 'Poleas', muscle: 'Brazos',
+    station: 'Torre de Poleas', zone: 'Poleas', muscle: 'Brazos', group: 'Curl de bíceps',
     restSec: 75, priority: 'mantenimiento',
-    alternatives: ['d_biceps_mancuernas', 'm_biceps'],
+    alternatives: ['p_biceps_cuerda', 'd_biceps_mancuernas', 'm_biceps'],
     guide: {
       setup: 'Polea abajo del todo, agarre supino en barra recta y codos fijos al costado.',
       execution: 'Flexiona llevando la barra hacia los hombros sin balancear la espalda.',
@@ -754,9 +755,9 @@ const EXERCISES = [
   },
   {
     id: 'd_biceps_mancuernas', name: 'Curl bíceps alterno con mancuernas', type: 'weight',
-    station: 'Banco y Mancuernas', zone: 'Mancuernas', muscle: 'Brazos',
+    station: 'Banco y Mancuernas', zone: 'Mancuernas', muscle: 'Brazos', group: 'Curl de bíceps',
     restSec: 75, priority: 'mantenimiento',
-    alternatives: ['p_biceps', 'm_biceps'],
+    alternatives: ['p_biceps', 'p_biceps_cuerda', 'm_biceps'],
     guide: {
       setup: 'De pie o sentado con espalda recta, mancuernas a los lados en agarre neutro.',
       execution: 'Sube una mancuerna girando la palma hacia arriba sin adelantar el codo.',
@@ -765,13 +766,193 @@ const EXERCISES = [
   },
   {
     id: 'm_biceps', name: 'Curl bíceps en máquina / Predicador', type: 'weight',
-    station: 'Máquinas', zone: 'Máquinas', muscle: 'Brazos',
+    station: 'Máquinas', zone: 'Máquinas', muscle: 'Brazos', group: 'Curl de bíceps',
     restSec: 75, priority: 'mantenimiento',
-    alternatives: ['p_biceps', 'd_biceps_mancuernas'],
+    alternatives: ['p_biceps', 'p_biceps_cuerda', 'd_biceps_mancuernas'],
     guide: {
       setup: 'Ajusta el asiento para apoyar los tríceps completos sobre el pupitre acolchado.',
       execution: 'Flexiona subiendo el agarre sin despegar los codos y baja sin extender de golpe.',
       breathing: 'Exhala al subir, inhala al bajar.'
+    }
+  },
+
+  // EN CASA · GLÚTEO + ABDOMEN (Esterilla + Sofá firme + Mochila/Mancuerna opcional)
+  {
+    id: 'c_hip_thrust', name: 'Hip thrust unilateral en sofá', type: 'weight', defaultWeight: 0,
+    station: 'En Casa', zone: 'Casa', muscle: 'Pierna',
+    restSec: 75, priority: 'prioritario',
+    alternatives: ['c_puente_gluteo', 'c_bulgara'],
+    guide: {
+      setup: 'Escápulas apoyadas en sofá firme, pie delantero a 30–45 cm; 0 kg o mochila/mancuerna en cadera.',
+      execution: 'Sube hasta alinear torso y muslo, aprieta glúteo 1–2 s arriba y baja sin arquear lumbar.',
+      breathing: 'Exhala fuerte al subir la cadera, inhala al bajar.'
+    }
+  },
+  {
+    id: 'c_bulgara', name: 'Sentadilla búlgara en sofá', type: 'weight', defaultWeight: 0,
+    station: 'En Casa', zone: 'Casa', muscle: 'Pierna',
+    restSec: 90, priority: 'prioritario',
+    alternatives: ['c_zancada_inversa', 'c_hip_thrust'],
+    guide: {
+      setup: 'Empeine trasero en sofá firme, zancada larga y torso ligeramente inclinado adelante.',
+      execution: 'Baja llevando cadera atrás hasta 90° y sube empujando con el talón delantero.',
+      breathing: 'Inhala al bajar, exhala al subir.'
+    }
+  },
+  {
+    id: 'c_zancada_inversa', name: 'Zancada inversa controlada', type: 'weight', defaultWeight: 0,
+    station: 'En Casa', zone: 'Casa', muscle: 'Pierna',
+    restSec: 60, priority: 'prioritario',
+    alternatives: ['c_bulgara', 'c_puente_gluteo'],
+    guide: {
+      setup: 'De pie con manos en cintura, mochila o mancuernas a los lados; paso largo atrás.',
+      execution: 'Baja la rodilla trasera cerca del suelo manteniendo torso firme y vuelve con el talón delantero.',
+      breathing: 'Inhala al dar el paso atrás, exhala al subir.'
+    }
+  },
+  {
+    id: 'c_puente_gluteo', name: 'Puente de glúteo a una pierna en suelo', type: 'weight', defaultWeight: 0,
+    station: 'En Casa', zone: 'Casa', muscle: 'Pierna',
+    restSec: 60, priority: 'prioritario',
+    alternatives: ['c_hip_thrust', 'c_zancada_inversa'],
+    guide: {
+      setup: 'Tumbado boca arriba en esterilla, un pie firme cerca del glúteo y la otra pierna elevada.',
+      execution: 'Eleva la cadera sin arquear lumbar, aguanta 1–2 s arriba y baja lento.',
+      breathing: 'Exhala al subir la cadera, inhala al bajar.'
+    }
+  },
+  {
+    id: 'c_abduccion', name: 'Abducción lateral de glúteo con pausa', type: 'reps',
+    station: 'En Casa', zone: 'Casa', muscle: 'Pierna',
+    restSec: 45, priority: 'opcional',
+    alternatives: ['c_puente_gluteo', 'c_hip_thrust'],
+    guide: {
+      setup: 'Tumbado de lado en esterilla, pierna superior recta y ligeramente retrasada respecto al torso.',
+      execution: 'Eleva la pierna sin rotar la cadera hacia atrás y aguanta 1–2 s arriba.',
+      breathing: 'Exhala al elevar la pierna, inhala al bajar lento.'
+    }
+  },
+  {
+    id: 'c_crunch_peso', name: 'Crunch en suelo con carga / tempo lento', type: 'weight', defaultWeight: 0,
+    station: 'En Casa', zone: 'Casa', muscle: 'Abdominales / Core',
+    restSec: 60, priority: 'prioritario',
+    alternatives: ['c_rkc_plank', 'c_crunch_inverso'],
+    guide: {
+      setup: 'Rodillas flexionadas; sujeta botella, mochila o mancuerna al pecho (o 0 kg con bajada en 3 s).',
+      execution: 'Enrolla el torso 30–45° contrayendo abdomen sin tirar del cuello y baja controlado.',
+      breathing: 'Suelta todo el aire al subir, inhala al bajar lento.'
+    }
+  },
+  {
+    id: 'c_crunch_inverso', name: 'Crunch inverso controlado', type: 'reps',
+    station: 'En Casa', zone: 'Casa', muscle: 'Abdominales / Core',
+    restSec: 60, priority: 'prioritario',
+    alternatives: ['c_hollow_body', 'f_deadbug'],
+    guide: {
+      setup: 'Boca arriba en esterilla, lumbar pegado al suelo y rodillas flexionadas a 90°.',
+      execution: 'Lleva rodillas al pecho despegando ligeramente el sacro sin impulso y baja en 3–4 s.',
+      breathing: 'Exhala al elevar la pelvis, inhala al descender controlado.'
+    }
+  },
+  {
+    id: 'c_rkc_plank', name: 'Plancha RKC (tensión máxima)', type: 'time',
+    station: 'En Casa', zone: 'Casa', muscle: 'Abdominales / Core',
+    restSec: 60, priority: 'mantenimiento',
+    alternatives: ['c_crunch_peso', 'c_hollow_body'],
+    guide: {
+      setup: 'Codos bajo hombros, pelvis en retroversión con glúteos y abdomen apretados al máximo.',
+      execution: 'Tira isométricamente de codos hacia pies sin moverte durante 20–35 s intensos.',
+      breathing: 'Respiración corta y continua manteniendo el bloque rígido.'
+    }
+  },
+  {
+    id: 'c_hollow_body', name: 'Hollow body hold (versión escalada)', type: 'time',
+    station: 'En Casa', zone: 'Casa', muscle: 'Abdominales / Core',
+    restSec: 60, priority: 'mantenimiento',
+    alternatives: ['c_crunch_inverso', 'f_deadbug'],
+    guide: {
+      setup: 'Boca arriba, lumbar pegado al suelo; recoge una o ambas rodillas si se despega la espalda.',
+      execution: 'Mantén escápulas y piernas elevadas sin perder el contacto lumbar con la esterilla.',
+      breathing: 'Respira corto sin soltar la tensión abdominal.'
+    }
+  },
+
+  // VARIANTES TORRE DE POLEAS
+  {
+    id: 'p_jalon_supino', name: 'Jalón agarre supino (palmas hacia ti)', type: 'weight',
+    station: 'Torre de Poleas', zone: 'Poleas', muscle: 'Espalda', group: 'Jalón en polea',
+    restSec: 105, priority: 'prioritario',
+    alternatives: ['p_jalon', 'p_jalon_neutro'],
+    guide: {
+      setup: 'Agarre estrecho/medio con palmas mirando hacia ti; muslos bien fijados.',
+      execution: 'Lleva la barra al pecho alto bajando codos por delante del torso.',
+      breathing: 'Exhala al bajar la barra, inhala al subir estirando dorsales.'
+    }
+  },
+  {
+    id: 'p_pullover', name: 'Pull-over en polea alta con cuerda', type: 'weight',
+    station: 'Torre de Poleas', zone: 'Poleas', muscle: 'Espalda',
+    restSec: 75, priority: 'mantenimiento',
+    alternatives: ['p_jalon_neutro', 'p_remo'],
+    guide: {
+      setup: 'De pie frente a polea alta, torso inclinado 30°, brazos casi rectos sujetando la cuerda.',
+      execution: 'Lleva las manos en arco hacia los muslos apretando dorsales sin doblar codos.',
+      breathing: 'Exhala al llevar la cuerda a los muslos, inhala al subir controlado.'
+    }
+  },
+  {
+    id: 'p_remo_unilateral', name: 'Remo unilateral en polea baja/media', type: 'weight',
+    station: 'Torre de Poleas', zone: 'Poleas', muscle: 'Espalda', group: 'Remo',
+    restSec: 75, priority: 'prioritario',
+    alternatives: ['p_remo', 'm_remo_apoyo'],
+    guide: {
+      setup: 'Estribo a una mano, paso atrás para dar tensión, torso firme sin rotar.',
+      execution: 'Tira del codo hacia la cadera pegado al costado y controla el estiramiento al volver.',
+      breathing: 'Exhala al tirar atrás, inhala al extender el brazo.'
+    }
+  },
+  {
+    id: 'p_cruce_pecho', name: 'Press / Cruce de pecho en polea', type: 'weight',
+    station: 'Torre de Poleas', zone: 'Poleas', muscle: 'Pecho',
+    restSec: 90, priority: 'mantenimiento',
+    alternatives: ['m_presspecho', 'm_aperturas'],
+    guide: {
+      setup: 'Poleas a altura media, un pie adelantado para estabilidad y codos semiflexionados.',
+      execution: 'Empuja y junta los estribos al frente del pecho apretando pectoral 1 s.',
+      breathing: 'Exhala al juntar manos al frente, inhala al abrir.'
+    }
+  },
+  {
+    id: 'p_facepull', name: 'Face pull en polea alta con cuerda', type: 'weight',
+    station: 'Torre de Poleas', zone: 'Poleas', muscle: 'Hombro',
+    restSec: 75, priority: 'opcional',
+    alternatives: ['m_deltoides_post', 'p_elevlat'],
+    guide: {
+      setup: 'Polea a altura de la cara con cuerda, agarre neutro con pulgares hacia atrás.',
+      execution: 'Tira de la cuerda hacia la frente separando manos y rotando hombros atrás.',
+      breathing: 'Exhala al llevar la cuerda a la cara, inhala al extender.'
+    }
+  },
+  {
+    id: 'p_biceps_cuerda', name: 'Curl martillo en polea baja con cuerda', type: 'weight',
+    station: 'Torre de Poleas', zone: 'Poleas', muscle: 'Brazos', group: 'Curl de bíceps',
+    restSec: 75, priority: 'mantenimiento',
+    alternatives: ['p_biceps', 'd_biceps_mancuernas'],
+    guide: {
+      setup: 'Polea abajo del todo con cuerda, agarre neutro (palmas enfrentadas) y codos pegados.',
+      execution: 'Sube los pulgares hacia los hombros sin adelantar codos ni balancear torso.',
+      breathing: 'Exhala al subir la cuerda, inhala al bajar lento.'
+    }
+  },
+  {
+    id: 'p_triceps_katana', name: 'Extensión tríceps por encima de cabeza en polea', type: 'weight',
+    station: 'Torre de Poleas', zone: 'Poleas', muscle: 'Brazos', group: 'Extensión de tríceps',
+    restSec: 75, priority: 'mantenimiento',
+    alternatives: ['p_triceps_cuerda', 'd_triceps_copa'],
+    guide: {
+      setup: 'De espaldas a la polea (altura media/baja) con cuerda, torso inclinado adelante y codos arriba.',
+      execution: 'Extiende los codos hacia delante estirando la cabeza larga del tríceps.',
+      breathing: 'Exhala al extender brazos, inhala al flexionar detrás.'
     }
   }
 ];
@@ -808,6 +989,38 @@ const ROUTINES = [
     club: 'Basic-Fit Pl. Universitat',
     all: ['m_crunch', 'm_presspecho', 'm_presshombro', 'm_aperturas', 'm_deltoides_post', 'p_triceps', 'p_biceps'],
     short: ['m_crunch', 'm_presspecho', 'm_presshombro']
+  },
+  {
+    id: 'rt_casa_a',
+    name: 'Casa A · Glúteo Dominante + Abs',
+    focus: '25–30 min · Esterilla + sofá firme (lastre opcional)',
+    club: 'En Casa',
+    all: ['c_hip_thrust', 'c_bulgara', 'c_zancada_inversa', 'c_crunch_peso', 'c_abduccion'],
+    short: ['c_hip_thrust', 'c_bulgara', 'c_crunch_peso']
+  },
+  {
+    id: 'rt_casa_b',
+    name: 'Casa B · Glúteo + Abdomen Dominante',
+    focus: '25–30 min · Esterilla + sofá firme (lastre opcional)',
+    club: 'En Casa',
+    all: ['c_bulgara', 'c_hip_thrust', 'c_puente_gluteo', 'c_crunch_inverso', 'c_hollow_body'],
+    short: ['c_bulgara', 'c_hip_thrust', 'c_crunch_inverso']
+  },
+  {
+    id: 'rt_polea_express',
+    name: 'Torre de Poleas · Concentrada en 1 Estación',
+    focus: '35–40 min · Espalda, pecho, hombro, brazos y crunch en polea',
+    club: 'Basic-Fit Pl. Universitat',
+    all: ['p_jalon_neutro', 'p_remo_unilateral', 'p_crunch', 'p_cruce_pecho', 'p_facepull', 'p_triceps_cuerda', 'p_biceps_cuerda'],
+    short: ['p_jalon_neutro', 'p_remo_unilateral', 'p_crunch', 'p_cruce_pecho']
+  },
+  {
+    id: 'rt_brazos_core',
+    name: 'Brazos + Hombro + Core · Pump',
+    focus: '35–40 min · Bíceps, tríceps, deltoides y abdomen',
+    club: 'Basic-Fit Pl. Universitat',
+    all: ['p_crunch', 'f_elevpiernas', 'p_triceps_cuerda', 'p_biceps_cuerda', 'p_elevlat', 'p_triceps_katana', 'm_biceps', 'p_facepull'],
+    short: ['p_crunch', 'p_triceps_cuerda', 'p_biceps_cuerda', 'p_elevlat']
   }
 ];
 
@@ -1085,6 +1298,20 @@ function onPopState() {
 }
 
 // --- MAPA DE SESIÓN (DRAFT) ---
+function repeatLastWorkout() {
+  if (!state.history.length) return;
+  const last = state.history.slice().sort((a, b) => b.date.localeCompare(a.date))[0];
+  state.draft = {
+    routineId: null,
+    title: last.title,
+    club: last.club || 'Basic-Fit Pl. Universitat',
+    date: today(),
+    items: last.entries.map(en => ({ exerciseId: en.exerciseId, included: true, swappedFrom: null }))
+  };
+  state.tab = 'entrenar';
+  render();
+}
+
 function openRoutineMap(id, clubOverride = null, date = today()) {
   const rt = ROUTINES.find(r => r.id === id);
   if (!rt) return;
@@ -1169,13 +1396,15 @@ function startDraft() {
     return;
   }
   const entries = chosen.map(item => {
+    const exo = ex(item.exerciseId);
     const prev = lastSet(item.exerciseId);
+    const defW = exo?.defaultWeight ?? 15;
     const n = state.quick ? 2 : 3;
     return {
       exerciseId: item.exerciseId,
       activeSetIndex: 0,
       sets: Array.from({ length: n }, () => ({
-        weight: prev?.weight || 15,
+        weight: prev ? (Number(prev.weight) || 0) : defW,
         reps: prev?.reps || 10,
         seconds: prev?.seconds || 40,
         done: false,
@@ -1845,6 +2074,10 @@ function renderTrain() {
       <div class="card" style="background:var(--panel2);padding:12px 14px">
         <div class="tiny" style="color:var(--purple);font-weight:700">💬 ${esc(roast)}</div>
       </div>
+      ${state.history.length ? (() => {
+        const last = state.history.slice().sort((a, b) => b.date.localeCompare(a.date))[0];
+        return `<button class="btn soft block" onclick="repeatLastWorkout()">🔁 Repetir último: ${esc(last.title)} (${esc(last.date)})</button>`;
+      })() : ''}
       <div class="stack">
         ${ROUTINES.map(r => `
           <section class="card stack">
@@ -1938,7 +2171,7 @@ function renderTrain() {
         <button class="btn soft small" onclick="swapActiveExercise()">🔄 Ocupada</button>
       </div>
      <div class="exercise-name">${esc(exercise?.name || 'Ejercicio')}</div>
-    <div class="tiny" role="button" style="color:var(--purple);font-weight:750;padding:6px 0" onclick="editExercise('${esc(e.exerciseId)}')">📝 ${exercise?.note ? esc(exercise.note) : 'Añadir ajuste (asiento, agarre…)'}</div>
+    <div role="button" style="${exercise?.note ? 'background:var(--panel2);border:1px solid #c4b5fd;border-radius:10px;padding:7px 10px;font-size:12px;' : 'font-size:11px;padding:4px 0;'}color:var(--purple);font-weight:750" onclick="editExercise('${esc(e.exerciseId)}')">📝 ${exercise?.note ? 'Ajuste: ' + esc(exercise.note) : 'Añadir ajuste (asiento, agarre…)'}</div>
       <div class="muted">${lastSessionSummary(e.exerciseId)}</div>
       ${exercise?.guide ? `
         <details class="guide-box">
@@ -2108,7 +2341,7 @@ function applyActiveSwap(newId) {
       exerciseId: newId,
       activeSetIndex: 0,
       sets: pending.map(() => ({
-        weight: prev?.weight || 15,
+        weight: prev ? (Number(prev.weight) || 0) : (ex(newId)?.defaultWeight ?? 15),
         reps: prev?.reps || 10,
         seconds: prev?.seconds || 40,
         done: false,
@@ -2118,8 +2351,9 @@ function applyActiveSwap(newId) {
     w.currentIndex++;
   } else {
     e.exerciseId = newId;
+    const defW = prev ? (Number(prev.weight) || 0) : (ex(newId)?.defaultWeight ?? 15);
     e.sets.forEach(s => {
-      s.weight = prev?.weight || 15;
+      s.weight = defW;
       s.reps = prev?.reps || 10;
     });
   }
@@ -2176,17 +2410,38 @@ function openStationPicker() {
 
 function openExercisePicker(by, val) {
   const list = state.exercises.filter(x => by === 'station' ? x.station === val : x.muscle === val);
+  const items = [], seen = new Set();
+  for (const x of list) {
+    if (x.group) {
+      if (seen.has(x.group)) continue;
+      seen.add(x.group);
+      const variants = list.filter(v => v.group === x.group);
+      if (variants.length > 1) {
+        items.push({ isGroup: true, name: x.group, variants });
+        continue;
+      }
+    }
+    items.push({ isGroup: false, ex: x });
+  }
   modal(`
     <div class="row">
       <strong>${esc(val)}</strong>
       <button class="btn small" onclick="openStationPicker()">← Atrás</button>
     </div>
     <div class="stack">
-      ${list.map(x => `
-        <button class="btn block row" style="text-align:left" onclick="appendExercise('${esc(x.id)}')">
+      ${items.map(it => it.isGroup ? `
+        <button class="btn block row" style="text-align:left" onclick="openVariantPicker('${esc(by)}', '${esc(val)}', '${esc(it.name)}')">
           <div>
-            <div><b>${esc(x.name)}</b></div>
-            <div class="tiny">${esc(x.muscle)} · Descanso ${fmt(x.restSec)}</div>
+            <div><b>${esc(it.name)}</b> <span class="badge">${it.variants.length} agarres</span></div>
+            <div class="tiny">${it.variants.map(v => esc(v.name)).join(' · ')}</div>
+          </div>
+          <span>→</span>
+        </button>
+      ` : `
+        <button class="btn block row" style="text-align:left" onclick="appendExercise('${esc(it.ex.id)}')">
+          <div>
+            <div><b>${esc(it.ex.name)}</b></div>
+            <div class="tiny">${esc(it.ex.muscle)} · Descanso ${fmt(it.ex.restSec)}</div>
           </div>
           <span>＋</span>
         </button>
@@ -2195,13 +2450,38 @@ function openExercisePicker(by, val) {
   `);
 }
 
+function openVariantPicker(by, val, groupName) {
+  const variants = state.exercises.filter(x => (by === 'station' ? x.station === val : x.muscle === val) && x.group === groupName);
+  modal(`
+    <div class="row">
+      <strong>${esc(groupName)} · Elige variante</strong>
+      <button class="btn small" onclick="openExercisePicker('${esc(by)}', '${esc(val)}')">← Atrás</button>
+    </div>
+    <div class="stack">
+      ${variants.map(x => {
+        const p = lastSet(x.id);
+        return `
+          <button class="btn block row" style="text-align:left" onclick="appendExercise('${esc(x.id)}')">
+            <div>
+              <div><b>${esc(x.name)}</b></div>
+              <div class="tiny">${p ? (p.weight ? `${p.weight} kg × ${p.reps}` : `${p.reps} reps (0 kg)`) : 'Sin marca previa'} · Desc. ${fmt(x.restSec)}</div>
+            </div>
+            <span>＋</span>
+          </button>
+        `;
+      }).join('')}
+    </div>
+  `);
+}
+
 function appendExercise(id) {
   const p = lastSet(id);
+  const defW = p ? (Number(p.weight) || 0) : (ex(id)?.defaultWeight ?? 15);
   state.active.entries.push({
     exerciseId: id,
     activeSetIndex: 0,
     sets: Array.from({ length: 3 }, () => ({
-      weight: p?.weight || 15,
+      weight: defW,
       reps: p?.reps || 10,
       seconds: p?.seconds || 40,
       done: false,
@@ -2302,25 +2582,63 @@ function savePlan(day) {
 
 // --- CATÁLOGO DE MÁQUINAS ---
 function renderExercises() {
+  const q = (state.query || '').trim();
+  const inSection = Boolean(state.stationView);
+  const currentSt = STATIONS.find(s => s.id === state.stationView);
+
+  if (inSection && !q) {
+    return `
+      <div class="row">
+        <div>
+          <div class="eyebrow">Sección</div>
+          <h1 class="title">${currentSt?.emoji || '🏋️'} ${esc(currentSt?.label || state.stationView)}</h1>
+        </div>
+        <button class="btn small" onclick="state.stationView=null;state.filter='Todos';render()">← Secciones</button>
+      </div>
+      <div class="chips">
+        ${['Todos', ...MUSCLES].map(m => `
+          <button class="chip ${(!state.filter || state.filter === 'Todos') && m === 'Todos' || state.filter === m ? 'active' : ''}" onclick="state.filter='${m}';render()">${m}</button>
+        `).join('')}
+      </div>
+      <div id="exercise-list" class="stack">${exerciseCards()}</div>
+      <button class="btn primary block" onclick="newExercise('${esc(state.stationView)}')">＋ Añadir máquina en esta sección</button>
+    `;
+  }
+
   return `
-    <div>
-      <div class="eyebrow">Catálogo Basic-Fit</div>
-      <h1 class="title">Máquinas y Estaciones</h1>
+    <div class="row">
+      <div>
+        <div class="eyebrow">Catálogo</div>
+        <h1 class="title">Máquinas y Estaciones</h1>
+      </div>
+      <button class="btn soft small" onclick="newExercise()">＋ Nueva</button>
     </div>
     <input id="search" class="field" placeholder="Buscar máquina, polea o grupo…" value="${esc(state.query || '')}" oninput="filterExercises()">
-    <div class="chips">
-      ${['Todos', ...MUSCLES].map(m => `
-        <button class="chip ${(!state.filter || state.filter === 'Todos') && m === 'Todos' || state.filter === m ? 'active' : ''}" onclick="state.filter='${m}';render()">${m}</button>
-      `).join('')}
+    <div id="exercise-list" class="stack">
+      ${q ? exerciseCards() : STATIONS.map(st => {
+        const count = state.exercises.filter(x => x.station === st.id).length;
+        return `
+          <button class="card row" style="text-align:left;width:100%" onclick="state.stationView='${esc(st.id)}';state.filter='Todos';render()">
+            <div class="row" style="gap:12px">
+              <span style="font-size:26px">${st.emoji}</span>
+              <div>
+                <strong style="font-size:16px">${esc(st.label)}</strong>
+                <div class="tiny">${count} ${count === 1 ? 'ejercicio' : 'ejercicios'}</div>
+              </div>
+            </div>
+            <span class="badge">Abrir →</span>
+          </button>
+        `;
+      }).join('')}
     </div>
-    <div id="exercise-list" class="stack">${exerciseCards()}</div>
-    <button class="btn soft block" onclick="newExercise()">＋ Añadir máquina nueva</button>
+    <button class="btn soft block" onclick="newExercise()">＋ Añadir máquina no guardada</button>
   `;
 }
 
 function exerciseCards() {
-  const q = (state.query || '').toLowerCase();
+  const q = (state.query || '').toLowerCase().trim();
   const arr = state.exercises.filter(x =>
+    (!state.stationView || q || x.station === state.stationView) &&
     (!state.filter || state.filter === 'Todos' || x.muscle === state.filter) &&
     (!q || `${x.name} ${x.station} ${x.muscle} ${x.note || ''}`.toLowerCase().includes(q))
   );
@@ -2333,11 +2651,11 @@ function exerciseCards() {
           <b>${st?.emoji || '🏋️'} ${esc(x.name)}</b>
           <span class="badge">${p ? (p.weight ? `${p.weight} kg` : p.seconds ? `${p.seconds} s` : `${p.reps} reps`) : 'Sin marca'}</span>
         </div>
-        <div class="muted" style="margin-top:3px">${esc(x.station)} · ${esc(x.muscle)} · Desc. ${fmt(x.restSec || 90)}</div>
+        <div class="muted" style="margin-top:3px">${esc(x.muscle)} · Desc. ${fmt(x.restSec || 90)}</div>
         ${x.note ? `<div class="tiny" style="color:var(--purple);margin-top:3px">📝 ${esc(x.note)}</div>` : ''}
       </button>
     `;
-  }).join('') || '<p class="muted">No hay máquinas con ese filtro.</p>';
+  }).join('') || '<p class="muted">No hay máquinas en esta categoría.</p>';
 }
 
 function filterExercises() {
@@ -2363,13 +2681,13 @@ function editExercise(id) {
   `);
 }
 
-function newExercise() {
+function newExercise(defaultStation = null) {
   modal(`
     <div class="row"><strong>Nueva máquina o ejercicio</strong><button class="btn small" onclick="closeModal()">Cerrar</button></div>
     <input id="new-name" class="field" placeholder="Nombre de la máquina">
     <label class="tiny">Estación</label>
     <select id="new-station" class="field">
-      ${STATIONS.map(s => `<option value="${esc(s.id)}">${s.emoji} ${esc(s.label)}</option>`).join('')}
+      ${STATIONS.map(s => `<option value="${esc(s.id)}" ${defaultStation === s.id ? 'selected' : ''}>${s.emoji} ${esc(s.label)}</option>`).join('')}
     </select>
     <label class="tiny">Grupo muscular</label>
     <select id="new-muscle" class="field">
